@@ -5,7 +5,7 @@ import { todos } from './data/task.json';
 import NavigationComponents from './components/NavigationComponent';
 import TaskComponent from './components/TaskComponent';
 import FormTaskComponent from './components/FormTaskComponent';
-
+import swal from 'sweetalert';
 
 class App extends Component {
   
@@ -25,15 +25,22 @@ class App extends Component {
     })
   }
 
-  handleRemoveTodo(index){
-    console.log(index);
-
-    if(window.confirm('Are you sure that you want to remove it?')){
+  async handleRemoveTodo(index){
+    
+    let willDelete = await swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to delete this task?",
+      icon: "warning",
+      dangerMode: true,
+    });
+     
+    if (willDelete) {
       this.setState({
         todos: this.state.todos.filter((todo, i) => {
             return i !== index;
         })
       })
+      swal("Deleted!", "Your imaginary task has been deleted!", "success");
     }
   }
 
